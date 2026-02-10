@@ -1,81 +1,148 @@
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4; /* Light gray background */
-  color: #333; /* Dark text color */
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+    }
 
-#header {
-  background-color: #3498db; /* Blue header */
-  color: white;
-  padding: 20px;
-  text-align: center;
-}
+    #gameBoard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* Creates a 3x3 grid */
+      grid-gap: 20px;
+    }
 
-#header a {
-  color: white;
-  text-decoration: none; /* Remove underlines from links */
-}
+    #cell {
+      width: 100%;
+      height: 100%;
+      border: 2px solid black;
+      display: flex; /* Use flexbox for easy centering */
+      justify-content: center;
+      align-items: center;
+      font-size: 3em;
+      cursor: pointer; /* Change cursor to indicate clickability */
+    }
 
-#header a:hover {
-  text-decoration: underline; /* Underline on hover */
-}
+    #cell:hover {
+      background-color: lightgray; /* Visual feedback on hover */
+    }
 
-#summary, #skills, #projects, #education {
-  padding: 20px;
-  margin-bottom: 30px;
-}
+    #resetButton {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
 
-h2 {
-  border-bottom: 1px solid #ccc; /* Add a line under headings */
-  padding-bottom: 5px;
-}
+  <h1>Tic Tac Toe</h1>
 
-ul {
-  list-style-type: disc; /* Use bullet points */
-  padding-left: 20px;
-}
+  <div id="gameBoard">
+    <!-- The game board will be dynamically created by JavaScript -->
+  </div>
 
-a {
-  color: #007bff; /* Link color */
-  text-decoration: none;
-}
+  <button id="resetButton">Reset Game</button>
 
-a:hover {
-  text-decoration: underline; /* Underline on hover */
-}
+  <script>
+    const gameBoard = document.getElementById('gameBoard');
+    const cells = document.querySelectorAll('#gameBoard cell'); // Get all the cells in the grid
+    let currentPlayer = 'X';  // Start with X
 
-#projects div {
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 20px;
-}
+    const winningMessages = [
+      'You won!',
+      'Player ' + currentPlayer + ' wins!',
+      'Tie game!'
+    ];
 
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #3498db; /* Blue footer */
-  color: white;
-}
+    let isGameOver = false;
 
-/* Responsive Design (Optional - for mobile) */
-@media screen and (max-width: 768px) {
-  #header {
-    padding: 15px;
-  }
+    // Function to reset the board
+    function resetBoard() {
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].textContent = ''; // Clear the cell content
+      }
+      currentPlayer = 'X';
+      isGameOver = false;
+    }
 
-  h2 {
-    font-size: 1.5em;
-  }
+    // Function to check if the game is over (win or tie)
+    function checkWin() {
+      // Check rows
+      for (let i = 0; i < 3; i++) {
+        if (cells[i * 3].textContent === cells[i * 3 + 1].textContent &&
+            cells[i * 3 + 1].textContent === cells[i * 3 + 2].textContent &&
+            cells[i * 3].textContent !== '') {
+          return true;
+        }
+      }
 
-  ul {
-    padding-left: 0;
-    list-style-type: square; /* Use squares on mobile */
-  }
+      // Check columns
+      for (let i = 0; i < 3; i++) {
+        if (cells[i].textContent === cells[i + 3].textContent &&
+            cells[i + 3].textContent === cells[i + 6].textContent &&
+            cells[i].textContent !== '') {
+          return true;
+        }
+      }
 
-  #projects div {
-    margin-bottom: 10px;
-  }
-}
+      // Check diagonals
+      if (cells[0].textContent === cells[4].textContent &&
+          cells[4].textContent === cells[8].textContent &&
+          cells[0].textContent !== '') {
+        return true;
+      }
+
+      if (cells[2].textContent === cells[4].textContent &&
+          cells[4].textContent === cells[6].textContent &&
+          cells[2].textContent !== '') {
+        return true;
+      }
+
+      // Check for tie (no empty cells)
+      if (!cells.some(cell => cell.textContent === '')) {
+        return true;
+      }
+
+      return false; // Game not over
+    }
+
+
+    // Function to handle a cell click
+    function cellClick(cell) {
+      if (isGameOver || cell.textContent !== '') {
+        return; // Don't allow clicks if game is over or cell is already filled
+      }
+
+      cell.textContent = currentPlayer;
+
+      if (checkWin()) {
+        alert(winningMessages[0]); // Display winning message
+        isGameOver = true;
+      } else if (checkWin()) {
+          alert(winningMessages[1]); // Display winning message
+          isGameOver = true;
+      } else if (!checkWin() && !isGameOver) {
+        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'; // Switch to the other player
+      }
+    }
+
+    // Event listener for cell clicks
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => cellClick(cell));
+    });
+
+    // Event listener for reset button click
+    document.getElementById('resetButton').addEventListener('click', resetBoard);
+
+  </script>
+
+</body>
+</html>
+
 
