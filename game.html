@@ -1,146 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe | Inji</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
 
-    #gameBoard {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); /* Creates a 3x3 grid */
-      grid-gap: 20px;
-    }
+        h1 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-size: 2.5em;
+            text-align: center;
+        }
 
-    #cell {
-      width: 100%;
-      height: 100%;
-      border: 2px solid black;
-      display: flex; /* Use flexbox for easy centering */
-      justify-content: center;
-      align-items: center;
-      font-size: 3em;
-      cursor: pointer; /* Change cursor to indicate clickability */
-    }
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
 
-    #cell:hover {
-      background-color: lightgray; /* Visual feedback on hover */
-    }
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
 
-    #resetButton {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1.5em;
-      cursor: pointer;
-    }
-  </style>
+        .cell:hover {
+            transform: scale(0.98);
+        }
+
+        .cell.x { background: #e74c3c; color: white; }
+        .cell.o { background: #3498db; color: white; }
+
+        .status {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 10px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .reset-btn {
+            margin-top: 30px;
+            padding: 12px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #2980b9;
+        }
+
+        .player {
+            font-size: 1.2em;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .player.x { color: #e74c3c; }
+        .player.o { color: #3498db; }
+
+        /* NEW: Return to Home Button */
+        .back-btn {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2980b9;
+        }
+    </style>
 </head>
 <body>
+    <h1>Tic-Tac-Toe</h1>
 
-  <h1>Tic Tac Toe</h1>
+    <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
 
-  <div id="gameBoard">
-    <!-- The game board will be dynamically created by JavaScript -->
-  </div>
+    <div class="status" id="status">Player X's Turn</div>
 
-  <button id="resetButton">Reset Game</button>
+    <div class="player" id="player">Player X</div>
 
-  <script>
-    const gameBoard = document.getElementById('gameBoard');
-    const cells = document.querySelectorAll('#gameBoard cell'); // Get all the cells in the grid
-    let currentPlayer = 'X';  // Start with X
+    <button class="reset-btn" id="reset">Reset Game</button>
+    <a href="index.html" class="back-btn">Return to Home</a>
 
-    const winningMessages = [
-      'You won!',
-      'Player ' + currentPlayer + ' wins!',
-      'Tie game!'
-    ];
-
-    let isGameOver = false;
-
-    // Function to reset the board
-    function resetBoard() {
-      for (let i = 0; i < cells.length; i++) {
-        cells[i].textContent = ''; // Clear the cell content
-      }
-      currentPlayer = 'X';
-      isGameOver = false;
-    }
-
-    // Function to check if the game is over (win or tie)
-    function checkWin() {
-      // Check rows
-      for (let i = 0; i < 3; i++) {
-        if (cells[i * 3].textContent === cells[i * 3 + 1].textContent &&
-            cells[i * 3 + 1].textContent === cells[i * 3 + 2].textContent &&
-            cells[i * 3].textContent !== '') {
-          return true;
-        }
-      }
-
-      // Check columns
-      for (let i = 0; i < 3; i++) {
-        if (cells[i].textContent === cells[i + 3].textContent &&
-            cells[i + 3].textContent === cells[i + 6].textContent &&
-            cells[i].textContent !== '') {
-          return true;
-        }
-      }
-
-      // Check diagonals
-      if (cells[0].textContent === cells[4].textContent &&
-          cells[4].textContent === cells[8].textContent &&
-          cells[0].textContent !== '') {
-        return true;
-      }
-
-      if (cells[2].textContent === cells[4].textContent &&
-          cells[4].textContent === cells[6].textContent &&
-          cells[2].textContent !== '') {
-        return true;
-      }
-
-      // Check for tie (no empty cells)
-      if (!cells.some(cell => cell.textContent === '')) {
-        return true;
-      }
-
-      return false; // Game not over
-    }
-
-
-    // Function to handle a cell click
-    function cellClick(cell) {
-      if (isGameOver || cell.textContent !== '') {
-        return; // Don't allow clicks if game is over or cell is already filled
-      }
-
-      cell.textContent = currentPlayer;
-
-      if (checkWin()) {
-        alert(winningMessages[0]); // Display winning message
-        isGameOver = true;
-      } else if (checkWin()) {
-          alert(winningMessages[1]); // Display winning message
-          isGameOver = true;
-      } else if (!checkWin() && !isGameOver) {
-        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'; // Switch to the other player
-      }
-    }
-
-    // Event listener for cell clicks
-    cells.forEach(cell => {
-      cell.addEventListener('click', () => cellClick(cell));
-    });
-
-    // Event listener for reset button click
-    document.getElementById('resetButton').addEventListener('click', resetBoard);
-
-  </script>
- <a href = "index.html">Home</a>
+    <script>
+        // ... (your existing JavaScript code)
+    </script>
+  <a href = "index.html">Home</a>
 </body>
 </html>
+
