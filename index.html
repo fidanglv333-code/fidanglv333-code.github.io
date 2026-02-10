@@ -3,146 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
+  <title>Fidan's Website</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: sans-serif; /* A readable font */
+      background-color: #f8f8ff; /* Light background color */
       text-align: center;
     }
 
-    #gameBoard {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr); /* Creates a 3x3 grid */
-      grid-gap: 20px;
+    h1 {
+      color: #007bff; /* A nice blue color */
     }
 
-    #cell {
-      width: 100%;
-      height: 100%;
-      border: 2px solid black;
-      display: flex; /* Use flexbox for easy centering */
-      justify-content: center;
-      align-items: center;
-      font-size: 3em;
-      cursor: pointer; /* Change cursor to indicate clickability */
-    }
-
-    #cell:hover {
-      background-color: lightgray; /* Visual feedback on hover */
-    }
-
-    #resetButton {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 1.5em;
-      cursor: pointer;
+    p {
+      margin-top: 20px; /* Add some space between the heading and paragraph */
     }
   </style>
 </head>
 <body>
 
-  <h1>Tic Tac Toe</h1>
-
-  <div id="gameBoard">
-    <!-- The game board will be dynamically created by JavaScript -->
-  </div>
-
-  <button id="resetButton">Reset Game</button>
-
-  <script>
-    const gameBoard = document.getElementById('gameBoard');
-    const cells = document.querySelectorAll('#gameBoard cell'); // Get all the cells in the grid
-    let currentPlayer = 'X';  // Start with X
-
-    const winningMessages = [
-      'You won!',
-      'Player ' + currentPlayer + ' wins!',
-      'Tie game!'
-    ];
-
-    let isGameOver = false;
-
-    // Function to reset the board
-    function resetBoard() {
-      for (let i = 0; i < cells.length; i++) {
-        cells[i].textContent = ''; // Clear the cell content
-      }
-      currentPlayer = 'X';
-      isGameOver = false;
-    }
-
-    // Function to check if the game is over (win or tie)
-    function checkWin() {
-      // Check rows
-      for (let i = 0; i < 3; i++) {
-        if (cells[i * 3].textContent === cells[i * 3 + 1].textContent &&
-            cells[i * 3 + 1].textContent === cells[i * 3 + 2].textContent &&
-            cells[i * 3].textContent !== '') {
-          return true;
-        }
-      }
-
-      // Check columns
-      for (let i = 0; i < 3; i++) {
-        if (cells[i].textContent === cells[i + 3].textContent &&
-            cells[i + 3].textContent === cells[i + 6].textContent &&
-            cells[i].textContent !== '') {
-          return true;
-        }
-      }
-
-      // Check diagonals
-      if (cells[0].textContent === cells[4].textContent &&
-          cells[4].textContent === cells[8].textContent &&
-          cells[0].textContent !== '') {
-        return true;
-      }
-
-      if (cells[2].textContent === cells[4].textContent &&
-          cells[4].textContent === cells[6].textContent &&
-          cells[2].textContent !== '') {
-        return true;
-      }
-
-      // Check for tie (no empty cells)
-      if (!cells.some(cell => cell.textContent === '')) {
-        return true;
-      }
-
-      return false; // Game not over
-    }
-
-
-    // Function to handle a cell click
-    function cellClick(cell) {
-      if (isGameOver || cell.textContent !== '') {
-        return; // Don't allow clicks if game is over or cell is already filled
-      }
-
-      cell.textContent = currentPlayer;
-
-      if (checkWin()) {
-        alert(winningMessages[0]); // Display winning message
-        isGameOver = true;
-      } else if (checkWin()) {
-          alert(winningMessages[1]); // Display winning message
-          isGameOver = true;
-      } else if (!checkWin() && !isGameOver) {
-        currentPlayer = (currentPlayer === 'X') ? 'O' : 'X'; // Switch to the other player
-      }
-    }
-
-    // Event listener for cell clicks
-    cells.forEach(cell => {
-      cell.addEventListener('click', () => cellClick(cell));
-    });
-
-    // Event listener for reset button click
-    document.getElementById('resetButton').addEventListener('click', resetBoard);
-
-  </script>
+  <h1>Welcome, Fidan!</h1>
+  <p>This is a simple website to display my name.</p>
    <a href = "game.html">Click here</a>
 </body>
 </html>
+
+
+
 
 
