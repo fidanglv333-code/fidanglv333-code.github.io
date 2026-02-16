@@ -1,0 +1,144 @@
+:root {
+
+--primary: #1a2a6c;
+
+--secondary: #b21f1f;
+
+--bg: #f0f2f5;
+
+--hl-color: #ffd700;
+
+--sl-color: #a8dadc;
+
+}
+
+
+
+{ box-sizing: border-box; margin: 0; padding: 0; }
+
+
+body {
+
+font-family: 'Segoe UI', sans-serif;
+
+background: var(--bg);
+
+color: #333;
+
+padding: 20px;
+
+}
+
+
+
+.resume-wrapper {
+
+max-width: 850px;
+
+margin: 0 auto;
+
+background: #fff;
+
+padding: 40px;
+
+box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+
+border-radius: 8px;
+
+}
+
+
+
+/* Header */
+
+.resume-header {
+
+text-align: center;
+
+border-bottom: 2px solid var(--primary);
+
+padding-bottom: 20px;
+
+}
+
+
+
+h1 { color: var(--primary); font-size: 2.2rem; }
+
+h2 { color: var(--primary); margin: 20px 0 10px; font-size: 1.1rem; text-transform: uppercase; border-bottom: 1px solid #ddd; }
+
+
+
+/* Layout */
+
+.main-layout { display: flex; gap: 30px; margin-top: 20px; }
+
+.content-area { flex: 2; }
+
+.sidebar { flex: 1; }
+
+
+
+/* Subject Table using Flexbox */
+
+.subject-table { display: flex; flex-direction: column; width: 100%; }
+
+.table-header, .table-row {
+
+display: flex;
+
+justify-content: space-between;
+
+padding: 8px 0;
+
+border-bottom: 1px solid #eee;
+
+}
+
+.table-header { font-weight: bold; color: var(--secondary); }
+
+
+
+/* Tags for HL/SL */
+
+.tag {
+
+font-size: 0.7rem;
+
+padding: 2px 6px;
+
+border-radius: 4px;
+
+font-weight: bold;
+
+}
+
+.hl { background: var(--hl-color); }
+
+.sl { background: var(--sl-color); }
+
+
+
+/* CAS Section */
+
+.cas-item { margin-bottom: 12px; font-size: 0.9rem; }
+
+.dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+
+.c { background: orange; }
+
+.a { background: green; }
+
+.s { background: purple; }
+
+
+
+.skills { padding-left: 18px; font-size: 0.9rem; }
+
+
+
+@media (max-width: 600px) {
+
+.main-layout { flex-direction: column; }
+
+}
